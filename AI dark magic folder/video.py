@@ -33,11 +33,6 @@ model = load_model(
 with open("labels.txt", "r") as f:
     class_names = [line.strip() for line in f if line.strip()]
 
-# ——— Image preprocessing ———
-image_path = "img.png"
-img = Image.open(image_path).convert("RGB")
-img = ImageOps.fit(img, (224, 224), Image.Resampling.LANCZOS)
-
 cam = cv2.VideoCapture(0)
 
 while True:
@@ -46,11 +41,9 @@ while True:
     # Display the captured frame
     cv2.imshow('Camera', frame)
 
-
-    # AI dark magic
+    # AI dark magic (noget image resezing og formatting stuff)
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     img = Image.fromarray(rgb)
-
     img = ImageOps.fit(img, (224, 224), Image.Resampling.LANCZOS)
     arr = np.asarray(img).astype(np.float32)
     arr = (arr / 127.5) - 1.0

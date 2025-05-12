@@ -5,8 +5,6 @@ from tensorflow.keras.layers import DepthwiseConv2D as _TFDepthwiseConv2D
 from tensorflow.keras import backend as K
 from PIL import Image, ImageOps
 import numpy as np
-import cv2
-
 
 # ——— Custom shim to swallow the extra 'groups' arg ———
 class DepthwiseConv2D(_TFDepthwiseConv2D):
