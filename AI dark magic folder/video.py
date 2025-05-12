@@ -60,7 +60,7 @@ while True:
     pred = model.predict(batch)
     i = int(np.argmax(pred[0]))
     print(f"Class: {class_names[i]}")
-    print(f"Confidence: {pred[0][i]:.4f}")
+    print(f"Confidence: {100*pred[0][i]:.4f}%")
 
     # Press 'q' to exit the loop
     if cv2.waitKey(1) == ord('q'):
