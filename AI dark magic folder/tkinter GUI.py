@@ -67,10 +67,7 @@ def open_camera():
     # AI stuff idk
     pred = model.predict(batch)
     i = int(np.argmax(pred[0]))
-    #print(f"Class: {class_names[i]}")
-    #print(f"Confidence: {100 * pred[0][i]:.4f}%")
-    #text1 = Label(window,text=(f"Class: {str(class_names[i])}"))
-    #text2 = Label(window,text=(f"Confidence: {100 * pred[0][i]:.4f}%"))
+
     text1.config(text=(f"Class: {str(class_names[i])}"))
     text2.config(text=(f"Confidence: {100 * pred[0][i]:.4f}%"))
 
