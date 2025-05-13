@@ -65,13 +65,13 @@ def open_camera():
     batch = np.expand_dims(arr, axis=0)
 
     # AI stuff idk
-    pred = model.predict(batch)
+    pred = model.predict(batch,verbose=0)
     i = int(np.argmax(pred[0]))
 
     text1.config(text=(f"Class: {str(class_names[i])}"))
     text2.config(text=(f"Confidence: {100 * pred[0][i]:.4f}%"))
 
-    label.after(10, open_camera)
+    label.after(5, open_camera)
 
 button1 = Button(window, text="Open Camera", command=open_camera)
 button1.pack()
