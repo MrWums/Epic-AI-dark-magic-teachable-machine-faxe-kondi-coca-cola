@@ -39,7 +39,7 @@ with open("labels.txt", "r") as f:
 cam = cv2.VideoCapture(0)
 
 window = Tk()
-window.geometry("500x500")
+window.geometry("800x600")
 
 label = Label(window)
 label.pack()
@@ -89,6 +89,8 @@ def open_camera():
         after_id = label.after(10, open_camera)
 
         button_back.pack()
+        text1.pack()
+        text2.pack()
 
 def png():
     # Delete knapperne fra tidligere menu
@@ -97,20 +99,30 @@ def png():
     button_quit.pack_forget()
 
     # Image stuff
-    image_path = "img.png"
-    img = Image.open(image_path).convert("RGB")
-    img = ImageOps.fit(img, (224, 224), Image.Resampling.LANCZOS)
+    try:
+        image_path = "img.png"
+        img = Image.open(image_path).convert("RGB")
+        img = ImageOps.fit(img, (224, 224), Image.Resampling.LANCZOS)
 
-    arr = np.asarray(img).astype(np.float32)
-    arr = (arr / 127.5) - 1.0
-    batch = np.expand_dims(arr, axis=0)
+        arr = np.asarray(img).astype(np.float32)
+        arr = (arr / 127.5) - 1.0
+        batch = np.expand_dims(arr, axis=0)
 
-    # ——— Predict ———
-    pred = model.predict(batch,verbose=0)
-    i = int(np.argmax(pred[0]))
-    text1.config(text=(f"Class: {str(class_names[i])}"))
-    text2.config(text=(f"Confidence: {100 * pred[0][i]:.4f}%"))
-    button_back.pack()
+        # ——— Predict ———
+        pred = model.predict(batch,verbose=0)
+        i = int(np.argmax(pred[0]))
+        text1.config(text=(f"Class: {str(class_names[i])}"))
+        text2.config(text=(f"Confidence: {100 * pred[0][i]:.4f}%"))
+        button_back.pack()
+
+    except FileNotFoundError:
+        text1.config(text=("ERROR: Image not be found"))
+        text2.config(text=("Please place the picture in the folder, and make sure it's called 'img.png'"))
+        button_back.pack()
+
+    text1.pack()
+    text2.pack()
+
 
 def main_menu():
     global cam_running, after_id
